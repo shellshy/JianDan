@@ -21,6 +21,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <!-- 这里的AppTheme会根据sdk版本的不同，加载不同的文件
+             当sdk<21时，加载values/styles.xml;
+             当sdk>=21时，加载values-v21/styles.xml
+             sdk>=21时，相当于直接使用sdk内部的主题样式，所以修改属性值时要使用android:navigationBarColor
+             sdk<21时，要继承系统的主题Theme.AppCompat.Light
+         -->
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait">

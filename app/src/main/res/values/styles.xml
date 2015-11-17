@@ -27,12 +27,13 @@
     </style>
 
     <style name="AppTheme.JDDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <!--是否开启导航图标的旋转效果-->
+        <!--是否开启导航图标的旋转效果 actionbar左上角图标-->
         <item name="spinBars">false</item>
+        <!--导航图标的颜色 actionbar左上角图标-->
         <item name="color">@android:color/white</item>
     </style>
 
-    <!-- 标题栏文字样式 -->
+    <!-- 标题栏文字样式 actionbar字体样式-->
     <style name="ActionBarTitleStyle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/actionbar_title</item>
