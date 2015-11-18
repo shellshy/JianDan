@@ -48,6 +48,14 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.View
     private LoadFinishCallBack mLoadFinisCallBack;
     private LoadResultCallBack mLoadResultCallBack;
 
+    /**
+     *
+     * @param activity
+     * @param loadFinisCallBack 加载完成回调接口,因为AutoLoadRecyclerView继承了loadFinishCallBack，
+     *                          所以AutoLoadRecyclerView对像可以被传进来
+     * @param loadResultCallBack 数据加载结果回调接口
+     * @param isLargeMode 是否显示大图模式
+     */
     public FreshNewsAdapter(Activity activity, LoadFinishCallBack loadFinisCallBack, LoadResultCallBack loadResultCallBack, boolean isLargeMode) {
         this.mActivity = activity;
         this.isLargeMode = isLargeMode;
@@ -80,6 +88,7 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //根据不同的显示模式，加载不同的布局
         int layoutId = isLargeMode ? R.layout.item_fresh_news : R.layout.item_fresh_news_small;
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(layoutId, parent, false);
@@ -155,17 +164,18 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.View
                         @Override
                         public void onResponse(ArrayList<FreshNews> response) {
 
-                            mLoadResultCallBack.onSuccess(LoadResultCallBack.SUCCESS_OK, null);
-                            mLoadFinisCallBack.loadFinish(null);
+                            mLoadResultCallBack.onSuccess(LoadResultCallBack.SUCCESS_OK, null);//回调Fragment中的方法
+                            mLoadFinisCallBack.loadFinish(null);//回调AutoLoadRecyclerView的loadFinish方法
 
                             if (page == 1) {
                                 mFreshNews.clear();
+                                //清理本地数据库缓存
                                 FreshNewsCache.getInstance(mActivity).clearAllCache();
                             }
 
                             mFreshNews.addAll(response);
                             notifyDataSetChanged();
-
+                            //把数据加载到本地数据库中缓存起来
                             FreshNewsCache.getInstance(mActivity).addResultCache(JSONParser.toString(response),
                                     page);
                         }
@@ -177,6 +187,7 @@ public class FreshNewsAdapter extends RecyclerView.Adapter<FreshNewsAdapter.View
                 }
             }), mActivity);
         } else {
+            //从本地缓存中加载数据
             mLoadResultCallBack.onSuccess(LoadResultCallBack.SUCCESS_OK, null);
             mLoadFinisCallBack.loadFinish(null);
 

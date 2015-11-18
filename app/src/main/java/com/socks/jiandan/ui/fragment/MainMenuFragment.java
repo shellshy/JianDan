@@ -44,6 +44,7 @@ public class MainMenuFragment extends BaseFragment {
         super.onAttach(activity);
 
         if (activity instanceof MainActivity) {
+            //记录外部的Activity，可以通过这个Activity在Fragment中调用Activity的方法
             mainActivity = (MainActivity) activity;
         } else {
             throw new IllegalArgumentException("The activity must be a MainActivity !");
@@ -104,6 +105,10 @@ public class MainMenuFragment extends BaseFragment {
                 public void onClick(View v) {
 
                     try {
+                        /**
+                         * 如果点击的是同一个菜单，就不做处理
+                         * 否则通过菜单选项的Class来反射出Fragment
+                         */
                         if (currentFragment != menuItem.getType()) {
                             Fragment fragment = (Fragment) Class.forName(menuItem.getFragment()
                                     .getName()).newInstance();

@@ -25,6 +25,11 @@ public class JDApplication extends Application {
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
+    /**
+     * 检测应用内存泄露
+     * 在应用onCreate中调用LeakCanary.install(this)
+     * 在页面的onDestory方法中调用refWatch.watch(this)即可
+     */
     private RefWatcher refWatcher;
 
     @Override

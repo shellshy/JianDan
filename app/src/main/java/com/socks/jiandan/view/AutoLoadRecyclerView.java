@@ -15,7 +15,13 @@ import com.socks.jiandan.view.imageloader.ImageLoadProxy;
  */
 public class AutoLoadRecyclerView extends RecyclerView implements LoadFinishCallBack {
 
+    /**
+     * 加载更多监听器
+     */
     private LoadMoreListener loadMoreListener;
+    /**
+     * 判断是否正在加载更多
+     */
     private boolean isLoadingMore;
 
     public AutoLoadRecyclerView(Context context) {
@@ -67,12 +73,19 @@ public class AutoLoadRecyclerView extends RecyclerView implements LoadFinishCall
             this.imageLoader = imageLoader;
         }
 
+        /**
+         *
+         * @param recyclerView
+         * @param dx 水平方向滑动的距离,是指每次滑动距离，而不是可滑动距离
+         * @param dy 垂直方向滑动的距离,是指每次滑动距离，而不是可滑动距离
+         */
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
             //由于GridLayoutManager是LinearLayoutManager子类，所以也适用
             if (getLayoutManager() instanceof LinearLayoutManager) {
+                //最后一个可见元素的位置，数据列表的下标
                 int lastVisibleItem = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
                 int totalItemCount = AutoLoadRecyclerView.this.getAdapter().getItemCount();
 
@@ -85,6 +98,18 @@ public class AutoLoadRecyclerView extends RecyclerView implements LoadFinishCall
             }
         }
 
+        /**
+         * SCROLL_STATE_IDLE 停止滚动
+         * SCROLL_STATE_DRAGGING 正在拖动（滑动）
+         * SCROLL_STATE_SETTLING 手指做了一个上拉动作离开屏幕，recyclerView继续显示列表下面的数据，然后停止向上滑动
+         *
+         * pauseOnScroll、pauseOnFling就是控制recyclerView滑动的时候是否加载图片数据的
+         * imageLoader.pause()停止加载图片数据
+         * imageLoader.resume()继续加载图片数据
+         *
+         * @param recyclerView
+         * @param newState 滚动状态
+         */
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 

@@ -2,15 +2,33 @@ package com.socks.jiandan.model;
 
 import android.support.v4.app.Fragment;
 
+/**
+ * 侧边栏选项
+ */
 public class MenuItem {
 
+    /**
+     * 菜单选项对应的FragmentType类型
+     */
     public enum FragmentType {
         FreshNews, BoringPicture, Sister, Joke, Video
     }
 
+    /**
+     * 菜单名称
+     */
     private String title;
+    /**
+     * 菜单图标
+     */
     private int resourceId;
+    /**
+     * 菜单对应的页面类型
+     */
     private FragmentType type;
+    /**
+     * 菜单绑定的Fragment类
+     */
     private Class<? extends Fragment> fragment;
 
     public String getTitle() {

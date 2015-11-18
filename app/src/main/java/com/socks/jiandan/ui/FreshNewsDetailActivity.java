@@ -39,6 +39,7 @@ public class FreshNewsDetailActivity extends BaseActivity {
         ButterKnife.inject(this);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
+        //设置actionbar左边导航按钮图片，这里是返回箭头图片
         mToolbar.setNavigationIcon(R.drawable.ic_actionbar_back);
     }
 

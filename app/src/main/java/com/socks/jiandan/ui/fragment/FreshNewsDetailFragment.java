@@ -83,6 +83,7 @@ public class FreshNewsDetailFragment extends BaseFragment {
                 }));
         loading.start();
 
+        //超时停止显示加载器
         loading.postDelayed(new Runnable() {
             @Override
             public void run() {

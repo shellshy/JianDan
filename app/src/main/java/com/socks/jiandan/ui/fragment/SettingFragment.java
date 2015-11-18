@@ -18,6 +18,10 @@ import com.socks.jiandan.utils.ShowToast;
 import java.io.File;
 import java.text.DecimalFormat;
 
+/**
+ * PreferenceFragment的布局是通过addPreferencesFromResource加载
+ * R.xml.preferences就是设置的布局
+ */
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
     public static final String CLEAR_CACHE = "clear_cache";
@@ -69,6 +73,12 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         aboutApp.setOnPreferenceClickListener(this);
     }
 
+    /**
+     * 设置选项点击响应事件
+     * 是根据preference的key值来区分不同的按钮
+     * @param preference
+     * @return
+     */
     @Override
     public boolean onPreferenceClick(Preference preference) {
 

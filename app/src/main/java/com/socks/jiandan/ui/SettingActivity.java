@@ -11,6 +11,10 @@ import com.socks.jiandan.base.BaseActivity;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * SettingActivity，要加载Fragment，在activity的layout文件中
+ * 直接使用Class标签来加载SettingFragment
+ */
 public class SettingActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)

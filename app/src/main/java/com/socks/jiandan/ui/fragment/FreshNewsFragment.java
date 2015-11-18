@@ -25,6 +25,11 @@ import com.victor.loading.rotate.RotateLoading;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * 首次加载，使用RotateLoading来显示加载等待
+ * 下拉刷新使用SwipeRefreshLayout的setOnRefreshListener处理
+ * 加载更多是通过AutoLoadRecyclerView来实现
+ */
 public class FreshNewsFragment extends BaseFragment implements LoadResultCallBack {
 
     @InjectView(R.id.recycler_view)
@@ -42,6 +47,7 @@ public class FreshNewsFragment extends BaseFragment implements LoadResultCallBac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //绑定onCreateOptionsMenu方法加载的菜单
         setHasOptionsMenu(true);
     }
 
@@ -57,10 +63,15 @@ public class FreshNewsFragment extends BaseFragment implements LoadResultCallBac
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        /**
+         * 如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+         * 因为新鲜事的大小是不固定的，所以这里设置为false
+         */
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLoadMoreListener(new LoadMoreListener() {
             @Override
             public void loadMore() {
+                //数据加载过程放在mAdapter中，可以更好的实现解耦
                 mAdapter.loadNextPage();
             }
         });
@@ -101,6 +112,13 @@ public class FreshNewsFragment extends BaseFragment implements LoadResultCallBac
         return false;
     }
 
+    /**
+     * adapter中成功加载数据回调，无论是加载本地数据，还是网络数据
+     * 不管是下拉刷新，还是首次加载数据，都让RotateLoading停止
+     * 并且让SwipeRefreshLayout的刷新动作停止
+     * @param result
+     * @param object
+     */
     @Override
     public void onSuccess(int result, Object object) {
         loading.stop();
@@ -109,6 +127,13 @@ public class FreshNewsFragment extends BaseFragment implements LoadResultCallBac
         }
     }
 
+    /**
+     * adapter中成功加载数据回调，无论是加载本地数据，还是网络数据
+     * 不管是下拉刷新，还是首次加载数据，都让RotateLoading停止
+     * 并且让SwipeRefreshLayout的刷新动作停止
+     * @param result
+     * @param object
+     */
     @Override
     public void onError(int code, String msg) {
         loading.stop();
